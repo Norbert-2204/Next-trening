@@ -31,7 +31,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: "postgresql://postgres:urodzony60@db:5432/Shop"
+      DATABASE_URL: "postgresql://postgres:postgres0@db:5432/Shop"
     depends_on:
       - db
     volumes:
