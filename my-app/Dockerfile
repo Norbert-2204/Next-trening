@@ -1,10 +1,10 @@
-# 1. Używamy Node 20
+# 1. Node 20 Alpine
 FROM node:20-alpine
 
-# 2. Ustawiamy katalog roboczy w kontenerze
+# 2. Katalog roboczy
 WORKDIR /app
 
-# 3. Kopiujemy package.json i package-lock.json (albo pnpm-lock.yaml/yarn.lock)
+# 3. Kopiujemy package.json / package-lock.json
 COPY package*.json ./
 
 # 4. Instalujemy zależności
@@ -13,11 +13,14 @@ RUN npm install
 # 5. Kopiujemy resztę plików
 COPY . .
 
-# 6. Budujemy aplikację (dla produkcji)
+# 6. Generujemy Prisma Client (dla Linux + Windows)
+RUN npx prisma generate
+
+# 7. Budujemy aplikację
 RUN npm run build
 
-# 7. Eksponujemy port 3000
+# 8. Eksponujemy port
 EXPOSE 3000
 
-# 8. Komenda uruchamiająca aplikację
-CMD ["npm", "start"]
+# 9. Uruchamiamy aplikację
+CMD ["npm", "run", "start"]

@@ -1,10 +1,20 @@
-import Link from "next/link";
-import { prisma } from "../lib/prisma";
-import type { cars } from "../generated/prisma";
-import AddCar from "./AddCar";
+"use client";
 
-const GetCars = async () => {
-  const data: cars[] = await prisma.cars.findMany();
+import Link from "next/link";
+import type { cars } from "../generated/prisma";
+import { prisma } from "../lib/prisma";
+import AddCar from "./AddCar";
+import { useEffect, useState } from "react";
+
+const GetCars = () => {
+  // const data: cars[] = await prisma.cars.findMany();
+  const [data, setData] = useState<cars[]>([]);
+
+  useEffect(() => {
+    fetch("/api/cars")
+      .then((res) => res.json())
+      .then(setData);
+  }, []);
 
   return (
     <div className="flex flex-col gap-6 p-6 items-center justify-center ">
